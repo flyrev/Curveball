@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <cstring>
+#include <stdexcept>
 
 using namespace std;
 
@@ -48,6 +49,16 @@ public:
 		}
 	}
 
+	const T* getData() const
+	{
+		return data;
+	}
+
+	T* getData() 
+	{
+		return data;
+	}
+
 	operator const T*() const
 	{
 		return data;
@@ -73,12 +84,16 @@ public:
 
 	size_t size() const { return m_size; }
 
-	void clear( bool dynamically_allocated = false)
+	void clear(void)
 	{
-		if ( dynamically_allocated )
-			for ( int i = 0; i < m_size; i++)
-				if ( data[i] )
-					delete data[i];
+		reserve(0);
+	}
+
+	void clear_dynamic()
+	{
+		for ( int i = 0; i < m_size; i++)
+			if ( data[i] )
+				delete data[i];
 		reserve(0);
 	}
 };
@@ -98,8 +113,6 @@ GLShaderProgram::GLShaderProgram(const char * filename)
 
 
 
-	
-
 
 
 void GLShaderProgram::Reload()
@@ -110,10 +123,10 @@ void GLShaderProgram::Reload()
 
 	try {
 
-		Array<char * > vertex_shader_source;
+		Array<GLchar * > vertex_shader_source;
 		Array<int> vertex_shader_source_line_lengths;
 		Array<int> fragment_shader_source_line_lengths;
-		Array<char * > fragment_shader_source;
+		Array<GLchar * > fragment_shader_source;
 
 		ifstream in( string(filename_base).append(".vert").c_str(), ios::in );
 
@@ -130,17 +143,17 @@ void GLShaderProgram::Reload()
 		}
 	
 		t_vert_handle = glCreateShader( GL_VERTEX_SHADER );
-		glShaderSource(t_vert_handle, vertex_shader_source.size(), vertex_shader_source, vertex_shader_source_line_lengths);
+		glShaderSource(t_vert_handle, vertex_shader_source.size(), (const GLchar**)vertex_shader_source.getData(), vertex_shader_source_line_lengths);
 
 		glCompileShader(t_vert_handle);
 
 		int iv = 0;
-		glGetShaderiv( t_vert_handle, GL_COMPILE_STATUS, &iv )
-		if (  iv == GL_FALSE)
+		glGetShaderiv( t_vert_handle, GL_COMPILE_STATUS, &iv );
+		if (iv == GL_FALSE)
 		{
-			getShaderiv( t_vert_handle, GL_INFO_LOG_LENGTH, &iv)
+			glGetShaderiv( t_vert_handle, GL_INFO_LOG_LENGTH, &iv);
 			char * temp = new char [iv];
-			getShaderInfoLog( t_vert_handle, iv, &iv, temp);
+			glGetShaderInfoLog( t_vert_handle, iv, &iv, temp);
 			runtime_error exc( string("Vertex shader error:\n").append(temp) );
 			delete [] temp;
 			throw exc;
@@ -162,7 +175,7 @@ void GLShaderProgram::Reload()
 		}
 	
 		t_frag_handle = glCreateShader( GL_VERTEX_SHADER );
-		glShaderSource(t_frag_handle, fragment_shader_source.size(), fragment_shader_source, fragment_shader_source_line_lengths);
+		glShaderSource(t_frag_handle, fragment_shader_source.size(), (const GLchar **)fragment_shader_source.getData(), fragment_shader_source_line_lengths);
 
 		glCompileShader(t_frag_handle);
 
@@ -170,9 +183,9 @@ void GLShaderProgram::Reload()
 		glGetShaderiv( t_frag_handle, GL_COMPILE_STATUS, &iv );
 		if (  iv == GL_FALSE)
 		{
-			getShaderiv( t_frag_handle, GL_INFO_LOG_LENGTH, &iv);
+			glGetShaderiv( t_frag_handle, GL_INFO_LOG_LENGTH, &iv);
 			char * temp = new char [iv];
-			getShaderInfoLog( t_frag_handle, iv, &iv, temp);
+			glGetShaderInfoLog( t_frag_handle, iv, &iv, temp);
 			runtime_error exc( string("Vertex shader error:\n").append(temp) );
 			delete [] temp;
 			throw exc;
@@ -180,9 +193,9 @@ void GLShaderProgram::Reload()
 
 		in.close();
 		fragment_shader_source_line_lengths.clear();
-		fragment_shader_source.clear(true);
+		fragment_shader_source.clear_dynamic();
 		vertex_shader_source_line_lengths.clear();
-		vertex_shader_source.clear(true);
+		vertex_shader_source.clear_dynamic();
 
 		t_prog_handle = glCreateProgram();
 
@@ -191,13 +204,13 @@ void GLShaderProgram::Reload()
 
 		glLinkProgram( t_prog_handle );
 
-		glGetProgramiv( t_prog_handle, GL_LINK_STATUS, iv);
+		glGetProgramiv( t_prog_handle, GL_LINK_STATUS, &iv);
 
 		if (  iv == GL_FALSE )
 		{
-			getProgramiv( t_prog_handle, GL_INFO_LOG_LENGTH, &iv);
+			glGetProgramiv( t_prog_handle, GL_INFO_LOG_LENGTH, &iv);
 			char * temp = new char [iv];
-			getProgramInfoLog( t_prog_handle, iv, &iv, temp);
+			glGetProgramInfoLog( t_prog_handle, iv, &iv, temp);
 			runtime_error exc( string("Vertex shader error:\n").append(temp) );
 			delete [] temp;
 			throw exc;
@@ -224,7 +237,7 @@ void GLShaderProgram::Reload()
 		 if (t_prog_handle)
 			 glDeleteProgram(t_vert_handle);
 	}
-
+}
 
 GLShaderProgram::~GLShaderProgram(void)
 {

@@ -13,3 +13,16 @@ class vec3
  private:
 	float data[3];
 };
+
+class vec2
+{
+ public:
+	vec2(float x, float y);
+	operator const float*() const;
+	vec2& operator=(const vec2 &vector);
+	vec2(const vec2&);
+	float &x;
+	float &y;
+ private:
+	float data[2];
+};

@@ -1,9 +1,10 @@
 #pragma once
+#include <stdint.h>
 
 class Quad
 {
  public:
-	Quad(float x, float y, float height, float width)
+	Quad(float x, float y, float height, float width);
 	float *getVertexData();
 	uint16_t *getIndexData();
  private:	

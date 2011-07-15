@@ -9,10 +9,12 @@ class GLShaderProgram
 	unsigned int vert_handle, frag_handle, prog_handle;
 	std::string filename_base;
 public:
-	GLShaderProgram( const char * shader_filename_base);
+	GLShaderProgram(const char * shader_filename_base);
 	void Use() { glUseProgram(prog_handle);}
 	void Reload();
-
+	void clear();
+	void clear_dynamic();
+	
 	operator GLuint () const
 	{
 		return prog_handle;

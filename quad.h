@@ -1,10 +1,11 @@
 #pragma once
+#include "vector.h"
 #include <stdint.h>
 
 class Quad
 {
  public:
-	Quad(float x, float y, float height, float width);
+	Quad(vec2 pos, float height, float width);
 	float *getVertexData();
 	uint16_t *getIndexData();
  private:	
@@ -12,5 +13,5 @@ class Quad
 	float height;
 	float width;
 	float *vertexData;
-	uint_16 *indexData;
+	uint16_t *indexData;
 };

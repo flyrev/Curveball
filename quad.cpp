@@ -1,26 +1,26 @@
 #include "quad.h"
+#include <cstdlib>
 
 Quad::Quad(vec2 coordinates, float height, float width)
 	: coordinates(coordinates),
-	  normal(normal),
 	  width(width),
 	  height(height)
 {
-	vertexData=malloc(sizeof(vec2)*4);
+	vertexData=(float*)malloc(sizeof(vec2)*4);
 	int index=0;
-	vertexData[index++] = x;
-	vertexData[index++] = y;
+	vertexData[index++] = coordinates.x;
+	vertexData[index++] = coordinates.y;
 
-	vertexData[index++] = x+width;
-	vertexData[index++] = y;
+	vertexData[index++] = coordinates.x+width;
+	vertexData[index++] = coordinates.y;
 
-	vertexData[index++] = x;
-	vertexData[index++] = y+height;
+	vertexData[index++] = coordinates.x;
+	vertexData[index++] = coordinates.y+height;
 
-	vertexData[index++] = x+height;
-	vertexData[index++] = y+width;
+	vertexData[index++] = coordinates.x+height;
+	vertexData[index++] = coordinates.y+width;
 
-	indexData = malloc(sizeof(float)*6);
+	indexData = (uint16_t*)malloc(sizeof(uint16_t)*6);
 
 	index=0;
 
@@ -38,7 +38,7 @@ float *Quad::getVertexData()
 	return vertexData;
 }
 
-uint16_t getIndexData()
+uint16_t *Quad::getIndexData()
 {
 	return indexData;	
 }

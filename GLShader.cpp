@@ -175,7 +175,7 @@ void GLShaderProgram::Reload()
 			fragment_shader_source.add( temp );
 		}
 	
-		t_frag_handle = glCreateShader( GL_VERTEX_SHADER );
+		t_frag_handle = glCreateShader( GL_FRAGMENT_SHADER );
 		glShaderSource(t_frag_handle, fragment_shader_source.size(), (const GLchar **)fragment_shader_source.getData(), fragment_shader_source_line_lengths);
 
 		glCompileShader(t_frag_handle);
@@ -237,6 +237,8 @@ void GLShaderProgram::Reload()
 			 glDeleteShader(t_frag_handle);
 		 if (t_prog_handle)
 			 glDeleteProgram(t_vert_handle);
+		 
+		 throw;
 	}
 }
 

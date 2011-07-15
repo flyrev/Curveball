@@ -17,6 +17,7 @@ public:
 	Array()
 		: data(0)
 		, m_size(0)
+		, m_capacity(0)
 	{}
 	Array( const Array& other)
 	{
@@ -76,7 +77,7 @@ public:
 
 	void add( const T & obj)
 	{
-		if (m_size == m_capacity)
+		if (m_size >= m_capacity)
 			reserve(m_size + m_size/2 + 1);
 		
 		data[m_size++] = obj;

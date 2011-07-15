@@ -95,6 +95,7 @@ int main(int argc, char **argv)
 	glutKeyboardFunc(&keyboard);
 
 	GLShaderProgram shader("stian");
+	
 
 	glutMainLoop();	
 

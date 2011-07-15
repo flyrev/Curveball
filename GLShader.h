@@ -10,7 +10,7 @@ class GLShaderProgram
 	std::string filename_base;
 public:
 	GLShaderProgram(const char * shader_filename_base);
-	void Use() { glUseProgram(prog_handle);}
+	void Use() { glUseProgram(prog_handle); }
 	void Reload();
 	void clear();
 	void clear_dynamic();

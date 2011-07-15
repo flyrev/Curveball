@@ -1,16 +1,24 @@
 CXXFLAGS := -g
+INCLUDE_DIR=include
+OBJECT_DIR=obj
+
 SOURCES=$(wildcard *.cpp)
-OBJS = $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+OBJ = $(patsubst %.cpp,$(OBJECT_DIR)/%.o,$(wildcard *.cpp))
+
 LIBS=-lglut -lGL -lGLEW
 CXX=g++
 TARGET=Solskogen
 LDIRS=/usr/X11R6/lib
+DEPENDENCIES = $(wildcard $(INCLUDE_DIR)/*.h)
 
-all: $(OBJS)
-	$(CXX) -g $(CXXFLAGS) $(OBJS) -o $(TARGET) $(LIBS) -L$(LDIRS)
+$(OBJECT_DIR)/%.o: %.cpp $(DEPENDENCIES)
+	$(CXX) -c -o $@ $< $(CXXFLAGS)
+
+Solskogen: $(OBJ)
+	$(CXX) -o $@ $^ $(CFLAGS) $(LIBS)
 
 clean:
-	rm -f *.o
+	rm -f $(OBJECT_DIR)/*.o *~ *#* */*#* core $(INCLUDE_DIR)/*~ 
 
 run: 	all
 	./Solskogen

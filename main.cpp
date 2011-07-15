@@ -6,6 +6,7 @@
 #include <ctime>
 //#include <cstdint> // WTF
 #include "vector.h"
+#include "GLShader.h"
 
 using namespace std;
 
@@ -92,6 +93,9 @@ int main(int argc, char **argv)
 	glutIdleFunc(&update);
 	glutDisplayFunc(&render);
 	glutKeyboardFunc(&keyboard);
+
+	GLShaderProgram shader("stian");
+
 	glutMainLoop();	
 
 	cout << "Life is a game" << endl;

@@ -7,6 +7,16 @@
 
 using namespace std;
 
+void keyboard(unsigned char key, int x, int y)
+{
+	switch(key) {
+
+	case 27: // ESC
+		exit(1);
+		break;
+	}
+}
+
 void update()
 {
 	
@@ -17,6 +27,8 @@ void render()
 {
 	glClearColor(0.0f,0.0f,0.0f,1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
+	//	glutWireTeapot(0.5);
+	glutSolidSphere(0.5f, 1000, 1000);
 	glutSwapBuffers();
 }
 
@@ -41,7 +53,9 @@ int main(int argc, char **argv)
 	
 	glutIdleFunc(&update);
 	glutDisplayFunc(&render);
+	glutKeyboardFunc(&keyboard);
 	glutMainLoop();	
+
 
 	
 	return EXIT_SUCCESS;

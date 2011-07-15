@@ -24,3 +24,13 @@ vec3& vec3::operator=(const vec3 &vector)
 	
 	return *this;
 }
+
+vec3::vec3(const vec3& vector)
+	: x(data[0])
+	, y(data[1])
+	, z(data[2])
+{
+	data[0] = vector.x;
+	data[1] = vector.y;
+	data[2] = vector.z;
+}

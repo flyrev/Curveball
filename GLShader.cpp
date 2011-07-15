@@ -17,7 +17,7 @@ public:
 		: data(0)
 		, m_size(0)
 	{}
-	Array( const & Array<T> other)
+	Array( const Array& other)
 	{
 		reserve( other.capacity);
 		for (int  i = 0; i < other.m_size; i++)
@@ -66,7 +66,7 @@ public:
 	void add( const T & obj)
 	{
 		if (m_size == m_capacity)
-			reserve(m_size + msize/2 + 1);
+			reserve(m_size + m_size/2 + 1);
 		
 		data[m_size++] = obj;
 	}
@@ -80,6 +80,7 @@ public:
 				if ( data[i] )
 					delete data[i];
 		reserve(0);
+	}
 };
 
 		

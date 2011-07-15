@@ -1,7 +1,7 @@
 #ifndef __GL_SHADER_CLASS_HEADER
-#endif __GL_SHADER_CLASS_HEADER
+#define __GL_SHADER_CLASS_HEADER
 
-#include <GL/gl.h>
+#include <GL/glew.h>
 #include <string>
 
 class GLShaderProgram

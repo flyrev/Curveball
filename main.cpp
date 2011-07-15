@@ -5,6 +5,7 @@
 #include <iostream>
 #include <ctime>
 //#include <cstdint> // WTF
+#include "vector.h"
 
 using namespace std;
 
@@ -22,7 +23,6 @@ void keyboard(unsigned char key, int x, int y)
 
 void update()
 {
-	
 	glutPostRedisplay();
 }
 
@@ -30,20 +30,24 @@ void render()
 {
 	glClearColor(0.0f,0.0f,0.0f,1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
-	//	glutWireTeapot(0.5);
-	//      glutSolidSphere(0.5f, 1000, 1000);
+
+
+
 	glutSwapBuffers();
 }
 
-float *vertexDataForSphere(int H, int V)
+vec3 *vertexDataForSphere(int H, int V)
 {
-	float *vertexData = (float*)malloc(sizeof(float)*3*H*V);
+	vec3 *vertexData = (vec3*)malloc(sizeof(vec3)*H*V);
 	int index=0;
 	for (int h=0; h<H; h++)
 		for (int v=0; v<V; v++) {
-			vertexData[index++] = sin(PI * h/H) * cos(2*PI * v/V); // X
-	                vertexData[index++] = sin(PI * h/H) * sin(2*PI * v/V);			// Y
-	                vertexData[index++] = cos(PI * h/H); // Z
+			vertexData[index++] = 
+                         vec3(
+			  sin(PI * h/H) * cos(2*PI * v/V), 
+                          sin(PI * h/H) * sin(2*PI * v/V), 
+                          cos(PI * h/H)
+                         ); 
 		}
 
 	return vertexData;
@@ -78,9 +82,7 @@ int main(int argc, char **argv)
 
 	cout << "Spill" << endl;
 	cout << "It's a game" << endl;
-
 	cout << "Loading ..." << endl;
-	
 	glewInit();
 
 	srand(time(NULL));
@@ -92,9 +94,8 @@ int main(int argc, char **argv)
 	glutKeyboardFunc(&keyboard);
 	glutMainLoop();	
 
-
+	cout << "Life is a game" << endl;
+	cout << "This was life" << endl;
 	
 	return EXIT_SUCCESS;
 }
-
-

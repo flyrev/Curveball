@@ -7,8 +7,7 @@ class Quad
 	float *getVertexData();
 	uint16_t *getIndexData();
  private:	
-	float x;
-	float y;
+	vec2 coordinates;
 	float height;
 	float width;
 	float *vertexData;

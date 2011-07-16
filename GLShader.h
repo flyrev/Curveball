@@ -4,9 +4,14 @@
 #include <GL/glew.h>
 #include <string>
 #include <stdexcept>
+#include "Array.h"
+#include "geometry.h"
+
+class Uniform;
 
 class GLShaderProgram
 {
+private:
 	unsigned int vert_handle, frag_handle, prog_handle;
 	std::string filename_base;
 public:
@@ -16,6 +21,8 @@ public:
 	void clear();
 	void clear_dynamic();
 	
+	Uniform * getUniform( const char * semantic );
+	
 	operator GLuint () const
 	{
 		return prog_handle;
@@ -23,6 +30,65 @@ public:
 
 	~GLShaderProgram(void);
 };
+
+
+class Uniform
+{
+	friend class GLShaderProgram;
+	GLuint handle;
+	GLShaderProgram * prog;
+	Uniform( const char * semantic, GLShaderProgram * prog)
+		: prog(prog)
+	{
+		handle = glGetUniformLocation( *prog, semantic);
+	}
+public:
+	void Matrix( const mat2 & m)
+	{
+		prog->Use();
+		glUniformMatrix2fv(handle,1,false, m);
+	}
+
+	void Matrix( const mat3 & m)
+	{
+		prog->Use();
+		glUniformMatrix3fv(handle,1,false, m);
+	}
+	void Matrix( const mat4 & m)
+	{
+		prog->Use();
+		glUniformMatrix4fv(handle,1,false, m);
+	}
+
+	void Vector( const vec2 & v)
+	{
+		prog->Use();
+		glUniform2fv(handle,1,v);
+	}
+	void Vector( const vec3 & v)
+	{
+		prog->Use();
+		glUniform3fv(handle,1,v);
+	}
+	void Vector( const vec4 & v)
+	{
+		prog->Use();
+		glUniform4fv(handle,1,v);
+	}
+
+	void Float( float f )	
+	{
+		prog->Use();
+		glUniform1f(handle,f);
+	}
+	void Int( int i )
+	{
+		prog->Use();
+		glUniform1i(handle,i);
+	}
+	
+};
+		
 
 class GLVertexAttribute
 {
@@ -48,6 +114,8 @@ public:
 		ChangeProgram( shader, semantic);
 
 	}
+
+
 
 	void Enable()
 	{

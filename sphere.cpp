@@ -35,15 +35,18 @@ Sphere::Sphere(float radius, unsigned int rings, unsigned int sectors)
 			*n++ = z;
 		}
 	
-	indices = new uint16_t[rings * sectors * 4];
+	indices = new uint16_t[rings * sectors * 6];
 
 	uint16_t *i = indices;
 	
 	for(r = 0; r < rings; r++) 
 		for(s = 0; s < sectors; s++) {
 			*i++ = r * sectors + s;
-			*i++ = r * sectors + (s+1);
+			*i++ = (r) * sectors + (s+1);
+			*i++ = (r+1) * sectors + (s);
+
+			*i++ = (r+1) * sectors + (s);
+			*i++ = (r) * sectors + (s+1);
 			*i++ = (r+1) * sectors + (s+1);
-			*i++ = (r+1) * sectors + s;
 		}
 }

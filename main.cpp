@@ -46,7 +46,7 @@ void render()
 
 	sphereShader->Use();
 	ballposition->Enable();
-	glDrawElements(GL_TRIANGLES, sphere->getIndexCount(), GL_UNSIGNED_SHORT, sphere->getIndexData());
+	glDrawElements(GL_QUADS, sphere->getIndexCount(), GL_UNSIGNED_SHORT, sphere->getIndexData());
 	ballposition->Disable();
 	
 	quadShader->Use();
@@ -83,7 +83,7 @@ int main(int argc, char **argv)
 	quadposition = new GLVertexAttribute("position", 2, 0, 0, quadShader, 4, quad->getVertexData());
 
 	sphereShader = new GLShaderProgram("sphere");
-	sphere = new Sphere(0.25,50,50);
+	sphere = new Sphere(0.25,60,60);
 	ballposition = new GLVertexAttribute("position", 3, 0, 0, sphereShader, sphere->getVertexCount(), sphere->getVertexData());
 
 	glutMainLoop();	

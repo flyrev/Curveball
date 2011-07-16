@@ -17,6 +17,6 @@ public:
 	float *getVertexData() const { return vertices; }
 	uint16_t *getIndexData() const { return indices; }
 	uint16_t getVertexCount() const { return rings*sectors; } 
-	uint16_t getIndexCount() const { return rings*sectors*4; }
+	uint16_t getIndexCount() const { return rings*sectors*6; }
 	
 };

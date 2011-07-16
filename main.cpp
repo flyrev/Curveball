@@ -7,7 +7,7 @@
 //#include <cstdint> // WTF
 #include "geometry.h"
 #include "GLShader.h"
-#include "quad.h"
+#include "wall.h"
 #include "sphere.h"
 #include "Entities.h"
 
@@ -17,7 +17,7 @@ int frames=0;
 
 using namespace std;
 
-Quad *quad;
+Wall *wall;
 Ball *ball;
 
 mat4 projView;
@@ -30,8 +30,7 @@ void keyboard(unsigned char key, int x, int y)
 	cout << "Life is a game" << endl;
 	cout << "This was life" << endl;
 	
-
-		exit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
 		break;
 	}
 }
@@ -50,8 +49,8 @@ void render()
 	glCullFace(GL_FRONT);
 	glEnable(GL_BLEND);
 
-	ball->Draw(projView);
-	quad->Draw(projView);
+      	ball->Draw(projView);
+	wall->Draw(projView);
 
 	glutSwapBuffers();
 }
@@ -62,7 +61,7 @@ int main(int argc, char **argv)
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
 	int t = glutCreateWindow( "Curveball" );
-
+	
 	glutInitWindowSize( 800, 800 );
 
 	cout << "Spill" << endl;
@@ -78,8 +77,8 @@ int main(int argc, char **argv)
 	glutDisplayFunc(&render);
 	glutKeyboardFunc(&keyboard);
 		
-	quad = new Quad(0,0,-200,50,50);
 	ball = new Ball(0,0,-200,25);
+	wall = new Wall(0,0);
 
 	glutMainLoop();	
 

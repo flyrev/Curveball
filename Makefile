@@ -11,9 +11,6 @@ TARGET=Solskogen
 LDIRS=/usr/X11R6/lib
 DEPENDENCIES = $(wildcard $(INCLUDE_DIR)/*.h)
 
-all:
-	clean
-
 $(OBJECT_DIR)/%.o: %.cpp $(DEPENDENCIES)
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 

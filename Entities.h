@@ -56,8 +56,10 @@ class Ball
 		projView->Matrix(projViewArg);
 		
 		glDrawElements(GL_TRIANGLES, sphere.getIndexCount(), GL_UNSIGNED_SHORT, sphere.getIndexData());
+		glFlush();
 		positionAttrib->Disable();
 		texCoordAttrib->Disable();
+		shader.Unbind(); // rofl
 	}
 
 	/** Interval is the time since the last update, in game-time. */

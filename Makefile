@@ -20,6 +20,8 @@ Solskogen: $(OBJ)
 clean:
 	rm -f $(OBJECT_DIR)/*.o *~ *#* */*#* core $(INCLUDE_DIR)/*~ *#*
 
+urn: run
+
 run: 	Solskogen
 	./Solskogen
 

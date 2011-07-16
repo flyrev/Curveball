@@ -86,7 +86,6 @@ int main(int argc, char **argv)
 	sphere = new Sphere(0.25,50,50);
 	ballposition = new GLVertexAttribute("position", 3, 0, 0, sphereShader, sphere->getVertexCount(), sphere->getVertexData());
 
-
 	glutMainLoop();	
 
 	cout << "Life is a game" << endl;

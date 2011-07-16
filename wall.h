@@ -5,7 +5,7 @@
 class Wall {
  public:
 	Wall(float x, float y)
-		: quad(x, y, 50, 50),
+		: quad(x, y, 0.50, 0.50),
 	          shader("quad")
 			  {
 		       			viewProj = shader.getUniform("viewProj2");

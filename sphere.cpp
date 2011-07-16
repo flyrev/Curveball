@@ -1,16 +1,21 @@
+#include "sphere.h"
+#include <cmath>
+
 Sphere::Sphere(float radius, unsigned int rings, unsigned int sectors)
+	: rings(rings),
+	  sectors(sectors)
 {
 	float const R = 1./(float)(rings-1);
 	float const S = 1./(float)(sectors-1);
 	int r, s;
 	
-	sphere_vertices = new GLfloat[rings * sectors * 3];
-	sphere_normals = new GLfloat[rings * sectors * 3];
-	sphere_texcoords = new GLfloat[rings * sectors * 2];
+	vertices = new GLfloat[rings * sectors * 3];
+	normals = new GLfloat[rings * sectors * 3];
+	texcoords = new GLfloat[rings * sectors * 2];
 	
-	GLfloat *v = sphere_vertices;
-	GLfloat *n = sphere_normals;
-	GLFloat *t = sphere_texcoords;
+	GLfloat *v = vertices;
+	GLfloat *n = normals;
+	GLfloat *t = texcoords;
 	
 	for(r = 0; r < rings; r++) 
 		for(s = 0; s < sectors; s++) {
@@ -30,8 +35,9 @@ Sphere::Sphere(float radius, unsigned int rings, unsigned int sectors)
 			*n++ = z;
 		}
 	
-	sphere_indices = new GLfloat[rings * sectors * 4];
-	GLushort *i = sphere_indices;
+	indices = new uint16_t[rings * sectors * 4];
+
+	uint16_t *i = indices;
 	
 	for(r = 0; r < rings; r++) 
 		for(s = 0; s < sectors; s++) {

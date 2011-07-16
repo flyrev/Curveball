@@ -18,7 +18,7 @@ Solskogen: $(OBJ)
 	$(CXX) -o $@ $^ $(CFLAGS) $(LIBS)
 
 clean:
-	rm -f $(OBJECT_DIR)/*.o *~ *#* */*#* core $(INCLUDE_DIR)/*~ 
+	rm -f $(OBJECT_DIR)/*.o *~ *#* */*#* core $(INCLUDE_DIR)/*~ *#*
 
 run: 	Solskogen
 	./Solskogen

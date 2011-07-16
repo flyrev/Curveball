@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdint.h>
-#include <GL/gl.h>
+#include <GL/glew.h>
 
 class Sphere
 {
@@ -18,5 +18,5 @@ public:
 	uint16_t *getIndexData() const { return indices; }
 	uint16_t getVertexCount() const { return rings*sectors; } 
 	uint16_t getIndexCount() const { return rings*sectors*6; }
-	
+	float *getTexCoordData() const { return texcoords; }
 };

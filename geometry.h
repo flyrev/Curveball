@@ -2,7 +2,8 @@
 #define __GEOMETRY_VECTORS_AND_STUFF_H
 
 #include <cmath>
-#include <GL/gl.h>
+#include <GL/glew.h>
+
 class vec2 
 {
 	float data[2];
@@ -11,8 +12,8 @@ public:
 	float & y;
 
 	vec2() : x(data[0]), y(data[1]) {}
-	vec2( float x, float y) : x(data[0]), y(data[1]) { this->x = x; this->y = y; }
-	vec2( const vec2 & copy): x(data[0]), y(data[1]) { *this = copy; }
+        vec2(float x, float y) : x(data[0]), y(data[1]) { this->x = x; this->y = y; }
+        vec2( const vec2 & copy): x(data[0]), y(data[1]) { x = copy.x; y=copy.y; }
 
 	float length() const { return sqrt(x*x + y*y);}
 
@@ -504,7 +505,7 @@ public:
 
 	static mat4 Translation( const vec3 & trans_vec)
 	{
-		return mat4( vec4(1,0,0,0), vec4(0,1,0,0), vec4(0,0,1,0), vec4( trans_vec ,1));
+		return mat4( vec4(1,0,0,trans_vec.x), vec4(0,1,0,trans_vec.y), vec4(0,0,1,trans_vec.z), vec4( 0,0,0,1));
 	}
 
 	static mat4 Rotation(const vec3 & axis, float rad_angle)

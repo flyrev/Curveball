@@ -1,26 +1,33 @@
 #include "quad.h"
 #include <cstdlib>
 
-Quad::Quad(vec2 coordinates, float height, float width)
+
+Quad::Quad(float x, float y, float z, float height, float width)
 	: coordinates(coordinates),
 	  width(width),
-	  height(height)
+	  height(height),
+	  shader("maria")
+	  
 {
-	vertexData=(float*)malloc(sizeof(vec2)*4);
+	vertexData=new float[12];
 	int index=0;
-	vertexData[index++] = coordinates.x;
-	vertexData[index++] = coordinates.y;
+	vertexData[index++] = x;	
+	vertexData[index++] = y;
+	vertexData[index++] = z;
 
-	vertexData[index++] = coordinates.x+width;
-	vertexData[index++] = coordinates.y;
+	vertexData[index++] = x+width;
+	vertexData[index++] = y;
+	vertexData[index++] = z;
 
-	vertexData[index++] = coordinates.x;
-	vertexData[index++] = coordinates.y+height;
+	vertexData[index++] = x;
+	vertexData[index++] = y+height;
+	vertexData[index++] = z;
 
-	vertexData[index++] = coordinates.x+height;
-	vertexData[index++] = coordinates.y+width;
+	vertexData[index++] = x+height;
+	vertexData[index++] = y+width;
+	vertexData[index++] = z;
 
-	indexData = (uint16_t*)malloc(sizeof(uint16_t)*6);
+	indexData = new GLushort[6];
 
 	index=0;
 
@@ -31,6 +38,9 @@ Quad::Quad(vec2 coordinates, float height, float width)
 	indexData[index++] = 2;
 	indexData[index++] = 1;
 	indexData[index++] = 3;
+
+	position = new GLVertexAttribute("position", 3, 0, 0, &shader, 4, vertexData);
+	projView = shader.getUniform("projView");
 }
 
 float *Quad::getVertexData()
@@ -42,3 +52,13 @@ uint16_t *Quad::getIndexData()
 {
 	return indexData;	
 }
+
+void Quad::Draw(const mat4 &projViewArg)
+{
+	shader.Use();
+        position->Enable();
+	projView->Matrix(projViewArg);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indexData);
+        position->Disable();
+}
+

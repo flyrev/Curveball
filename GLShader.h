@@ -7,7 +7,7 @@
 #include "Array.h"
 #include "geometry.h"
 
-class Uniform;
+class GLUniform;
 
 class GLShaderProgram
 {
@@ -21,7 +21,7 @@ public:
 	void clear();
 	void clear_dynamic();
 	
-	Uniform * getUniform( const char * semantic );
+	GLUniform * getUniform( const char * semantic );
 	
 	operator GLuint () const
 	{
@@ -32,12 +32,12 @@ public:
 };
 
 
-class Uniform
+class GLUniform
 {
 	friend class GLShaderProgram;
 	GLuint handle;
 	GLShaderProgram * prog;
-	Uniform( const char * semantic, GLShaderProgram * prog)
+	GLUniform( const char * semantic, GLShaderProgram * prog)
 		: prog(prog)
 	{
 		handle = glGetUniformLocation( *prog, semantic);

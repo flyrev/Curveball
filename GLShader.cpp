@@ -18,9 +18,9 @@ GLShaderProgram::GLShaderProgram(const char * filename)
 
 }
 
-Uniform * GLShaderProgram::getUniform( const char * semantic )
+GLUniform * GLShaderProgram::getUniform( const char * semantic )
 {
-		return new Uniform(semantic, this);
+		return new GLUniform(semantic, this);
 }
 
 

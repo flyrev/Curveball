@@ -9,6 +9,7 @@
 #include "GLShader.h"
 #include "quad.h"
 #include "sphere.h"
+#include "Entities.h"
 
 #define PI 3.14
 
@@ -17,21 +18,19 @@ int frames=0;
 using namespace std;
 
 Quad *quad;
-GLShaderProgram *quadShader;
-GLShaderProgram *sphereShader;
+Ball *ball;
 
-GLVertexAttribute *quadposition;
-GLVertexAttribute *ballposition;
-GLVertexIndices *indices;
-Sphere *sphere;
-
-Uniform *rotation;
+mat4 projView;
 
 void keyboard(unsigned char key, int x, int y)
 {
 	switch(key) {
 
 	case 27: // ESC
+	cout << "Life is a game" << endl;
+	cout << "This was life" << endl;
+	
+
 		exit(EXIT_SUCCESS);
 		break;
 	}
@@ -40,34 +39,26 @@ void keyboard(unsigned char key, int x, int y)
 void update()
 {
 	glutPostRedisplay();
+	ball->Update(frames++/2000.0);
 }
 
 void render()
 {
-	glClearColor(0.0f,0.0f,0.1f,1.0f);
-	glClear(GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.0f,0.0f,0.2f,1.0f);
+	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
 	glCullFace(GL_FRONT);
-	//	glEnable(GL_BLEND);
-	
-	rotation->Matrix(mat4::Rotation(vec3(0,1,0), frames++/1999.0f));
-	
-	sphereShader->Use();
-	ballposition->Enable();
-	glDrawElements(GL_TRIANGLES, sphere->getIndexCount(), GL_UNSIGNED_SHORT, sphere->getIndexData());
-	ballposition->Disable();
-	
-	quadShader->Use();
-	quadposition->Enable();
-	glDrawElements(GL_TRIANGLES, 6*1, GL_UNSIGNED_SHORT, quad->getIndexData());
-	quadposition->Disable();
+	glEnable(GL_BLEND);
+
+	ball->Draw(projView);
+	quad->Draw(projView);
 
 	glutSwapBuffers();
 }
 
 int main(int argc, char **argv)
 {
+	projView = mat4::Projection(100.0f, 10000.0f, PI/4, 1.0f);
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
 	int t = glutCreateWindow( "Curveball" );
@@ -87,19 +78,10 @@ int main(int argc, char **argv)
 	glutDisplayFunc(&render);
 	glutKeyboardFunc(&keyboard);
 		
-	quad = new Quad(vec2(0,0),0.5,0.5);
-	quadShader = new GLShaderProgram("maria");
-	quadposition = new GLVertexAttribute("position", 2, 0, 0, quadShader, 4, quad->getVertexData());
-
-	sphereShader = new GLShaderProgram("sphere");
-	sphere = new Sphere(0.25,100,100);
-	rotation = sphereShader->getUniform("rotation");
-	ballposition = new GLVertexAttribute("position", 3, 0, 0, sphereShader, sphere->getVertexCount(), sphere->getVertexData());
+	quad = new Quad(0,0,-200,50,50);
+	ball = new Ball(0,0,-200,25);
 
 	glutMainLoop();	
 
-	cout << "Life is a game" << endl;
-	cout << "This was life" << endl;
-	
 	return EXIT_SUCCESS;
 }

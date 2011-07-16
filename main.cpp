@@ -1,16 +1,27 @@
-#include <cstdlib>
+// #include <cstdlib>
 #include <GL/glew.h>
 #include <GL/glut.h>
 #include <cmath>
 #include <iostream>
 #include <ctime>
 //#include <cstdint> // WTF
-#include "vector.h"
+#include "geometry.h"
 #include "GLShader.h"
+#include "quad.h"
+#include "sphere.h"
+
+#define PI 3.14
 
 using namespace std;
 
-#define PI 3.14
+Quad *quad;
+GLShaderProgram *quadShader;
+GLShaderProgram *sphereShader;
+
+GLVertexAttribute *quadposition;
+GLVertexAttribute *ballposition;
+GLVertexIndices *indices;
+Sphere *sphere;
 
 void keyboard(unsigned char key, int x, int y)
 {
@@ -29,48 +40,21 @@ void update()
 
 void render()
 {
-	glClearColor(0.0f,0.0f,0.0f,1.0f);
+	glClearColor(0.0f,0.0f,0.1f,1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
+	glEnable(GL_BLEND);
 
-
+	sphereShader->Use();
+	ballposition->Enable();
+	glDrawElements(GL_TRIANGLES, 6*5*5, GL_UNSIGNED_SHORT, sphere->getIndexData());
+	ballposition->Disable();
+	
+	quadShader->Use();
+	quadposition->Enable();
+	glDrawElements(GL_TRIANGLES, 6*1, GL_UNSIGNED_SHORT, quad->getIndexData());
+	quadposition->Disable();
 
 	glutSwapBuffers();
-}
-
-vec3 *vertexDataForSphere(int H, int V)
-{
-	vec3 *vertexData = (vec3*)malloc(sizeof(vec3)*H*V);
-	int index=0;
-	for (int h=0; h<H; h++)
-		for (int v=0; v<V; v++) {
-			vertexData[index++] = 
-                         vec3(
-			  sin(PI * h/H) * cos(2*PI * v/V), 
-                          sin(PI * h/H) * sin(2*PI * v/V), 
-                          cos(PI * h/H)
-                         ); 
-		}
-
-	return vertexData;
-}
-
-uint16_t *indexDataForSphere(int H, int V)
-{
-	uint16_t *indexData = (uint16_t*)malloc(sizeof(uint16_t)*3*H*V);
-	int index=0;
-
-	for (int h=0; h<H; h++)
-		for (int v=0; v<V; v++) {
-			indexData[index++] = h;
-			indexData[index++] = h+V;
-			indexData[index++] = h+1;
-
-			indexData[index++] = h+1;
-			indexData[index++] = h-1+V;
-			indexData[index++] = h+V;
-		}
-
-	return indexData;
 }
 
 int main(int argc, char **argv)
@@ -93,9 +77,15 @@ int main(int argc, char **argv)
 	glutIdleFunc(&update);
 	glutDisplayFunc(&render);
 	glutKeyboardFunc(&keyboard);
+		
+	quad = new Quad(vec2(0,0),0.5,0.5);
+	quadShader = new GLShaderProgram("maria");
+	quadposition = new GLVertexAttribute("position", 2, 0, 0, quadShader, 4, quad->getVertexData());
 
-	GLShaderProgram shader("stian");
-	
+	sphereShader = new GLShaderProgram("sphere");
+	sphere = new Sphere(0.25,5,5);
+	ballposition = new GLVertexAttribute("position", 3, 0, 0, sphereShader, 3*5*5, sphere->getVertexData());
+
 
 	glutMainLoop();	
 

@@ -30,7 +30,7 @@ public:
 		position += velocity;
 
 		rotation += spin;
-		if ( rotation < 0.0f);
+		if ( rotation < 0.0f)
 			rotation += 2*PI;
 		else if ( rotation >= 2*PI )
 			rotation -= 2*PI;

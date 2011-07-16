@@ -2,7 +2,7 @@
 #define __GEOMETRY_VECTORS_AND_STUFF_H
 
 #include <cmath>
-#include <GL\gl.h>
+#include <GL/gl.h>
 class vec2 
 {
 	float data[2];
@@ -39,10 +39,7 @@ public:
 
 };
 
-float dot( const vec2& lhs, const vec2 & rhs)
-{
-	return lhs.x * rhs.x + lhs.y*rhs.y;
-}
+extern float dot( const vec2& lhs, const vec2 & rhs);
 
 class vec3
 {
@@ -84,15 +81,8 @@ public:
 	
 };
 
-vec3 cross( const vec3& lhs, const vec3 & rhs )
-{
-	return vec3(lhs.y*rhs.z - lhs.z*rhs.y, rhs.x*lhs.z -lhs.x*rhs.z, lhs.y*rhs.z - rhs.y*lhs.z );
-}
-
-float dot( const vec3& lhs, const vec3 & rhs)
-{
-	return lhs.x * rhs.x + lhs.y*rhs.y + lhs.z*rhs.z;
-}
+extern vec3 cross( const vec3& lhs, const vec3 & rhs );
+extern float dot( const vec3& lhs, const vec3 & rhs);
 
 class vec4 
 {
@@ -136,26 +126,14 @@ public:
 
 };
 
-float dot( const vec4& lhs, const vec4 & rhs)
-{
-	return lhs.x * rhs.x + lhs.y*rhs.y + lhs.z*rhs.z + lhs.w*rhs.w;
-}
+extern float dot( const vec4& lhs, const vec4 & rhs);
 
 
-vec2 normalize( const vec2 & v)
-{
-	return v*(1.0f/v.length());
-}
+extern vec2 normalize( const vec2 & v);
 
-vec3 normalize( const vec3 & v)
-{
-	return v*(1.0f/v.length());
-}
+extern vec3 normalize( const vec3 & v);
 
-vec4 normalize( const vec4 & v)
-{
-	return v*(1.0f/v.length());
-}
+extern vec4 normalize( const vec4 & v);
 
 
 
@@ -380,7 +358,7 @@ public:
 		return mat3( Cos + u.x*u.x*(OneMinusCos) , u.x*u.y*(OneMinusCos) - u.z*Sin, u.x*u.z*(OneMinusCos) + u.y*Sin,
 					u.y*u.x*(OneMinusCos) + u.z*Sin, Cos + u.y*u.y*(OneMinusCos), u.y*u.z*(OneMinusCos) - u.x*Sin,
 					u.z*u.x*(OneMinusCos) - u.y*Sin, u.z*u.y*(OneMinusCos) + u.x*Sin, Cos + u.z*u.z*(OneMinusCos));
-
+	}
 };
 
 class mat4
@@ -542,7 +520,7 @@ public:
 					0,0,0,1);
 	}
 
-	static mat4 ( float near, float far, float h_fov_in_rad, float aspect )
+	static mat4 Projection( float near, float far, float h_fov_in_rad, float aspect )
 	{
 		float r = near * tan(h_fov_in_rad/2);
 		float t = r*aspect;
@@ -552,26 +530,12 @@ public:
 						0, near/t, 0, 0,
 						0,0, -(far+near)/(far-near), -2*far*near/(far-near),
 						0,0,-1,0);
-
-						
-						0, n/* /t*/, 0, 0,
-						0,0, -(far + near)/(far-near), -2*far*near/(far-near),
-						0,0,-1,0 );
 	}
 };
 
-mat4 operator * (float v, const mat4 & m)
-{
-	return m*v;
-}
-mat3 operator * (float v, const mat3 & m)
-{
-	return m*v;
-}
-mat2 operator * (float v, const mat2 & m)
-{
-	return m*v;
-}
+extern mat4 operator * (float v, const mat4 & m);
+extern mat3 operator * (float v, const mat3 & m);
+extern mat2 operator * (float v, const mat2 & m);
 
 
 

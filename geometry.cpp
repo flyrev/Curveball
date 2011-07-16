@@ -167,3 +167,40 @@ vec4 & vec4::operator*=( float v)
 	w *= v;
 	return *this;
 }
+
+float dot( const vec2& lhs, const vec2 & rhs)
+{
+	return lhs.x * rhs.x + lhs.y*rhs.y;
+}
+
+vec3 cross( const vec3& lhs, const vec3 & rhs )
+{
+	return vec3(lhs.y*rhs.z - lhs.z*rhs.y, rhs.x*lhs.z -lhs.x*rhs.z, lhs.y*rhs.z - rhs.y*lhs.z );
+}
+
+float dot( const vec3& lhs, const vec3 & rhs)
+{
+	return lhs.x * rhs.x + lhs.y*rhs.y + lhs.z*rhs.z;
+}
+
+float dot( const vec4& lhs, const vec4 & rhs)
+{
+	return lhs.x * rhs.x + lhs.y*rhs.y + lhs.z*rhs.z + lhs.w*rhs.w;
+}
+
+
+vec2 normalize( const vec2 & v)
+{
+	return v*(1.0f/v.length());
+}
+
+vec3 normalize( const vec3 & v)
+{
+	return v*(1.0f/v.length());
+}
+
+vec4 normalize( const vec4 & v)
+{
+	return v*(1.0f/v.length());
+}
+

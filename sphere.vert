@@ -19,5 +19,5 @@ void main()
 
 	texCoord=texCoords;
 
-	lightposition=(vec4(-100,-100,-100, 1.0)).xyz;
+	lightposition=(world*vec4(-100,-100,-100, 1.0)).xyz;
 }

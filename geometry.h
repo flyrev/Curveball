@@ -526,9 +526,8 @@ public:
 		float r = near * tan(h_fov_in_rad/2);
 		float t = r*aspect;
 		
-
-		return mat4(	near/r, 0, 0, 0,
-						0, near/t, 0, 0,
+		return mat4(near/r, 0, 0, 0,
+		         	0, near/t, 0, 0,
 						0,0, -(far+near)/(far-near), -2*far*near/(far-near),
 						0,0,-1,0);
 	}
@@ -537,7 +536,7 @@ public:
 extern mat4 operator * (float v, const mat4 & m);
 extern mat3 operator * (float v, const mat3 & m);
 extern mat2 operator * (float v, const mat2 & m);
-
+extern vec3 reflect(const vec3& in, const vec3& normal);
 
 
 #endif

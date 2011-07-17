@@ -7,17 +7,17 @@ class Quad
 	Quad(float x, float y, float width, float height)
 		{
 			int index=0;
-			vertexData[index++] = x;
-			vertexData[index++] = y;
+			vertexData[index++] = x-width/2;
+			vertexData[index++] = y-height/2;
 			
-			vertexData[index++] = x+width;
-			vertexData[index++] = y;
+			vertexData[index++] = x+width/2;
+			vertexData[index++] = y-height/2;
 
-			vertexData[index++] = x;
-			vertexData[index++] = y+height;
+			vertexData[index++] = x-width/2;
+			vertexData[index++] = y+height/2;
 
-			vertexData[index++] = x+width;
-			vertexData[index++] = y+height;
+			vertexData[index++] = x+width/2;
+			vertexData[index++] = y+height/2;
 
 			index=0;
 			

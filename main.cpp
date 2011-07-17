@@ -1,4 +1,3 @@
-// #include <cstdlib>
 #include <GL/glew.h>
 #include <GL/glut.h>
 #include <cmath>
@@ -12,6 +11,9 @@
 #include "Entities.h"
 
 #define PI 3.14
+
+const float window_width=1366.0f;
+const float window_height=768.0f;
 
 int frames=0;
 
@@ -39,6 +41,7 @@ void update()
 {
 	glutPostRedisplay();
 	ball->Update(frames++/2000.0);
+	
 }
 
 void render()
@@ -57,12 +60,15 @@ void render()
 
 int main(int argc, char **argv)
 {
-	projView = mat4::Projection(100.0f, 10000.0f, PI/4, 1.0f);
+	float aspect = window_height/window_width;
+	float FOV = PI/4;
+	float nearplane = 100.0f;
+	projView = mat4::Projection(nearplane, 10000.0f, FOV, aspect);
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
 	int t = glutCreateWindow( "Curveball" );
 	
-	glutInitWindowSize( 800, 800 );
+	glutInitWindowSize( window_width, window_height );
 
 	cout << "Spill" << endl;
 	cout << "It's a game" << endl;
@@ -77,8 +83,8 @@ int main(int argc, char **argv)
 	glutDisplayFunc(&render);
 	glutKeyboardFunc(&keyboard);
 		
-	ball = new Ball(0,0,-200,25);
-	wall = new Wall(0,0);
+	ball = new Ball(0.0,0.0,-200.0,25.0);
+	wall = new Wall(0.0,0.0,nearplane,aspect,FOV);
 
 	glutMainLoop();	
 

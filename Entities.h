@@ -62,8 +62,16 @@ class Ball
 		shader.Unbind(); // rofl
 	}
 
+	const vec3& getPosition() const {
+		return position;
+	}
+
+	float getRadius() const {
+		return radius;
+	}
+
 	/** Interval is the time since the last update, in game-time. */
-	void Update( double interval) 
+	void Update(double interval) 
 	{
 		velocity += magnus_effect()*interval;
 		position += velocity;
@@ -73,8 +81,6 @@ class Ball
 			rotation += 2*PI;
 		else if ( rotation >= 2*PI )
 			rotation -= 2*PI;
-
-
 	}
 };
 

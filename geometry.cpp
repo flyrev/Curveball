@@ -204,3 +204,8 @@ vec4 normalize( const vec4 & v)
 	return v*(1.0f/v.length());
 }
 
+vec3 reflect(const vec3& V, const vec3& normal)
+{
+	vec3 N = normalize(normal);
+	return N*(-2)*dot(V,N) + V;
+}

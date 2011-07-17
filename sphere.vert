@@ -8,9 +8,8 @@ varying vec3 position;
 varying vec2 texCoord;
 varying vec3 normal;
 
-const vec3 originalLightPosition=vec3(0,0,0);
-varying vec3 lightPosition;
- 
+varying vec3 lightposition;
+
 void main()
 {
 	position=(world*vec4(Position, 1.0)).xyz;
@@ -20,5 +19,5 @@ void main()
 
 	texCoord=texCoords;
 
-	lightPosition = (vec4(originalLightPosition, 1.0)).xyz;
+	lightposition=(vec4(-100,-100,-100, 1.0)).xyz;
 }

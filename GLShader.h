@@ -6,7 +6,6 @@
 #include <stdexcept>
 #include "Array.h"
 #include "geometry.h"
-#include <iostream>
 
 class GLUniform;
 
@@ -134,10 +133,6 @@ public:
 		prog->Use();
 		int temp=glGetAttribLocation(*prog, semantic);
 
-		std::cout << "PROG: " << *prog << std::endl;
-		std::cout << "TEMP: " << temp << std::endl;
-		std::cout << "Semantic: " << semantic << std::endl;
-
 		if (temp == -1)
 			throw std::runtime_error(std::string("Vertex attribute: ").append(semantic).append(" was not found in the current program.") );
 
@@ -146,7 +141,6 @@ public:
 
 		glBindBuffer( GL_ARRAY_BUFFER, buffer_handle);
 		glVertexAttribPointer(attrib_index, components, GL_FLOAT, normalized ? GL_TRUE : GL_FALSE, 0, 0);
-		std::cout << "Components: " << components << std::endl;
 		glBindBuffer( GL_ARRAY_BUFFER, 0); // unbind
 		
 	}

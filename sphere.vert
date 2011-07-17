@@ -15,9 +15,9 @@ void main()
 	position=(world*vec4(Position, 1.0)).xyz;
 	gl_Position = projView*vec4(position, 1.0);
 
-	normal = normalize(Position.xyz);
+	normal = (world*vec4(normalize(Position.xyz), 0.0)).xyz;
 
 	texCoord=texCoords;
 
-	lightposition=(world*vec4(-100,-100,-100, 1.0)).xyz;
+	lightposition=(vec4(-100,-100,-100, 1.0)).xyz;
 }

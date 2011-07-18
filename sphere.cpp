@@ -1,5 +1,8 @@
 #include "sphere.h"
 #include <cmath>
+#ifdef _WIN32
+	const double M_PI = cos(-1.0);
+#endif
 
 Sphere::Sphere(float radius, unsigned int rings, unsigned int sectors)
 	: rings(rings),
@@ -19,7 +22,7 @@ Sphere::Sphere(float radius, unsigned int rings, unsigned int sectors)
 	
 	for(r = 0; r < rings; r++) 
 		for(s = 0; s < sectors; s++) {
-			float const y = sin( -M_PI_2 + M_PI * r * R );
+			float const y = sin( -0.5*M_PI + M_PI * r * R );
 			float const x = cos(2*M_PI * s * S) * sin( M_PI * r * R );
 			float const z = sin(2*M_PI * s * S) * sin( M_PI * r * R );
 			

@@ -3,6 +3,8 @@
 #include "quad.h"
 #include "Entities.h"
 
+
+
 class Wall {
  public:
  Wall(float x, float y, float near, float aspect, float h_fov_in_rad)

@@ -10,8 +10,6 @@
 #include "sphere.h"
 #include "Entities.h"
 
-#define PI 3.14
-
 const float window_width=1366.0f;
 const float window_height=768.0f;
 
@@ -61,7 +59,7 @@ void render()
 int main(int argc, char **argv)
 {
 	float aspect = window_height/window_width;
-	float FOV = PI/4;
+	float FOV = M_PI/4;
 	float nearplane = 100.0f;
 	projView = mat4::Projection(nearplane, 10000.0f, FOV, aspect);
 	glutInit(&argc, argv);

@@ -116,6 +116,7 @@ public:
 	void Enable()
 	{
 		glBindBuffer( GL_ARRAY_BUFFER, buffer_handle);
+		
 		glVertexAttribPointer(attrib_index, components, GL_FLOAT, normalized ? GL_TRUE : GL_FALSE, 0, 0);
 		glEnableVertexAttribArray(attrib_index);
 		glBindBuffer( GL_ARRAY_BUFFER, 0); // unbind

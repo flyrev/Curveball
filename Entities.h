@@ -4,7 +4,9 @@
 #include "sphere.h"
 #include "GLShader.h"
 
-const double PI = acos(-1);
+#ifdef _WIN32
+	static const double M_PI = acos(-1.0);
+#endif
 
 class Ball
 {
@@ -78,9 +80,9 @@ class Ball
 
 		rotation += spin;
 		if ( rotation < 0.0f)
-			rotation += 2*PI;
-		else if ( rotation >= 2*PI )
-			rotation -= 2*PI;
+			rotation += 2*M_PI;
+		else if ( rotation >= 2*M_PI )
+			rotation -= 2*M_PI;
 	}
 };
 
